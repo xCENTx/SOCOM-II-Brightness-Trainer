@@ -5,12 +5,6 @@ namespace SOCOM_II_MULTI_TOOL.Helpers
     public static class GameHelper
     {
         /// <summary>
-        /// RENDER FIX
-        /// </summary>
-        //Render Fix Address
-        public static IntPtr RENDER = new IntPtr(0x2035A2F8);
-        
-        /// <summary>
         /// BRIGHTNESS ADJUSTMENTS
         /// </summary>
         

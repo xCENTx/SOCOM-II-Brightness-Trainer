@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
 namespace SOCOM_II_TOOL
@@ -14,6 +15,9 @@ namespace SOCOM_II_TOOL
         private const string PCSX2PROCESSNAME = "pcsx2";
         bool pcsx2Running;
 
+        [DllImport("user32.dll")]
+        static extern short GetAsyncKeyState(System.Windows.Forms.Keys vKey);
+
         public Form1()
         {
             InitializeComponent();
@@ -22,7 +26,7 @@ namespace SOCOM_II_TOOL
         private void Form1_Load(object sender, EventArgs e)
         {
             ///This was a message box for a previous build with the render fix toggle
-            string data = ("SOCOM 2 Brightness Tool for PCSX2 users");
+            string data = ("USE NUMPAD + and - TO FINE TUNE ADJUSTMENTS");
             MessageBox.Show(data);
 
             if (!pcsx2Running)
@@ -55,6 +59,40 @@ namespace SOCOM_II_TOOL
                 return;
             }
          m = new MemorySharp(Process.GetProcessesByName(PCSX2PROCESSNAME).First());
+            
+            if (GetAsyncKeyState(Keys.Add) < 0)
+            {
+                //IntPtr address = playerObjectCoords + CodeHelper.Z;
+                var address = GameHelper.BRIGHTNESS1;
+                var address2 = GameHelper.BRIGHTNESS2;
+                var address3 = GameHelper.BRIGHTNESS3;
+                float oldValue = m.Read<float>(address, false);
+                //float oldValue2 = m.Read<float>(address2, false);
+                //float oldValue3 = m.Read<float>(address3, false);
+                float newValue = oldValue + 2;
+                //float newValue2 = oldValue2 + 1;
+                //float newValue3 = oldValue3 + 1;
+                m.Write(address, value: newValue, false);
+                //m.Write(address2, value: newValue2, false);
+                //m.Write(address3, value: newValue3, false);
+            }
+
+            if (GetAsyncKeyState(Keys.Subtract) < 0)
+            {
+                //IntPtr address = playerObjectCoords + CodeHelper.Z;
+                var address = GameHelper.BRIGHTNESS1;
+                var address2 = GameHelper.BRIGHTNESS2;
+                var address3 = GameHelper.BRIGHTNESS3;
+                float oldValue = m.Read<float>(address, false);
+                //float oldValue2 = m.Read<float>(address2, false);
+                //float oldValue3 = m.Read<float>(address3, false);
+                float newValue = oldValue - 2;
+                //float newValue2 = oldValue2 - 1;
+                //float newValue3 = oldValue3 - 1;
+                m.Write(address, value: newValue, false);
+                //m.Write(address2, value: newValue2, false);
+                //m.Write(address3, value: newValue3, false);
+            }
         }
 
         /// DEFAULT BRIGHTNESS
