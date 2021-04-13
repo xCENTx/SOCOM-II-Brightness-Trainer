@@ -7,7 +7,10 @@ namespace SOCOM_II_MULTI_TOOL.Helpers
         /// <summary>
         /// BRIGHTNESS ADJUSTMENTS
         /// </summary>
-        
+
+        //Player Object Stuff
+        public static IntPtr sPlayerPointer = new IntPtr(0x2044d648);
+
         //Brightness Address 1
         public static IntPtr BRIGHTNESS1 = new IntPtr(0x204B858C);
         

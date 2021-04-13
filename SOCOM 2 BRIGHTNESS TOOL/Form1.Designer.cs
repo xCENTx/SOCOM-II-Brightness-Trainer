@@ -55,7 +55,7 @@ namespace SOCOM_II_TOOL
             this.pnl_PCSX2Detected.BackColor = System.Drawing.SystemColors.Control;
             this.pnl_PCSX2Detected.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.pnl_PCSX2Detected.Controls.Add(this.pcsx2Status);
-            this.pnl_PCSX2Detected.Location = new System.Drawing.Point(4, 187);
+            this.pnl_PCSX2Detected.Location = new System.Drawing.Point(4, 188);
             this.pnl_PCSX2Detected.Name = "pnl_PCSX2Detected";
             this.pnl_PCSX2Detected.Size = new System.Drawing.Size(250, 24);
             this.pnl_PCSX2Detected.TabIndex = 63;
@@ -136,7 +136,7 @@ namespace SOCOM_II_TOOL
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(35)))), ((int)(((byte)(32)))), ((int)(((byte)(39)))));
-            this.ClientSize = new System.Drawing.Size(257, 216);
+            this.ClientSize = new System.Drawing.Size(257, 215);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.pnl_PCSX2Detected);
@@ -144,7 +144,7 @@ namespace SOCOM_II_TOOL
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
-            this.Text = "SOCOM 2 BRIGHTNESS TOOL";
+            this.Text = "SOCOM 2";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.pnl_PCSX2Detected.ResumeLayout(false);
             this.pnl_PCSX2Detected.PerformLayout();

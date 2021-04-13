@@ -25,8 +25,7 @@ namespace SOCOM_II_TOOL
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            ///This was a message box for a previous build with the render fix toggle
-            string data = ("USE NUMPAD + and - TO FINE TUNE ADJUSTMENTS");
+            string data = ("USE NUMPAD + and - TO FINE TUNE BRIGHTNESS ADJUSTMENTS");
             MessageBox.Show(data);
 
             if (!pcsx2Running)
@@ -58,40 +57,25 @@ namespace SOCOM_II_TOOL
             {
                 return;
             }
-         m = new MemorySharp(Process.GetProcessesByName(PCSX2PROCESSNAME).First());
-            
-            if (GetAsyncKeyState(Keys.Add) < 0)
-            {
-                //IntPtr address = playerObjectCoords + CodeHelper.Z;
-                var address = GameHelper.BRIGHTNESS1;
-                var address2 = GameHelper.BRIGHTNESS2;
-                var address3 = GameHelper.BRIGHTNESS3;
-                float oldValue = m.Read<float>(address, false);
-                //float oldValue2 = m.Read<float>(address2, false);
-                //float oldValue3 = m.Read<float>(address3, false);
-                float newValue = oldValue + 2;
-                //float newValue2 = oldValue2 + 1;
-                //float newValue3 = oldValue3 + 1;
-                m.Write(address, value: newValue, false);
-                //m.Write(address2, value: newValue2, false);
-                //m.Write(address3, value: newValue3, false);
-            }
+            m = new MemorySharp(Process.GetProcessesByName(PCSX2PROCESSNAME).First());
 
-            if (GetAsyncKeyState(Keys.Subtract) < 0)
+            if ((m.Read<byte>(GameHelper.sPlayerPointer, 4, false) != null) && (!m.Read<byte>(GameHelper.sPlayerPointer, 4, false).SequenceEqual(new byte[] { 0, 0, 0, 0 })))
             {
-                //IntPtr address = playerObjectCoords + CodeHelper.Z;
-                var address = GameHelper.BRIGHTNESS1;
-                var address2 = GameHelper.BRIGHTNESS2;
-                var address3 = GameHelper.BRIGHTNESS3;
-                float oldValue = m.Read<float>(address, false);
-                //float oldValue2 = m.Read<float>(address2, false);
-                //float oldValue3 = m.Read<float>(address3, false);
-                float newValue = oldValue - 2;
-                //float newValue2 = oldValue2 - 1;
-                //float newValue3 = oldValue3 - 1;
-                m.Write(address, value: newValue, false);
-                //m.Write(address2, value: newValue2, false);
-                //m.Write(address3, value: newValue3, false);
+                if (GetAsyncKeyState(Keys.Add) < 0)
+                {
+                    IntPtr address = GameHelper.BRIGHTNESS1;
+                    float oldValue = m.Read<float>(address, false);
+                    float newValue = oldValue + 2;
+                    m.Write(address, value: newValue, false);
+                }
+
+                if (GetAsyncKeyState(Keys.Subtract) < 0)
+                {
+                    IntPtr address = GameHelper.BRIGHTNESS1;
+                    float oldValue = m.Read<float>(address, false);
+                    float newValue = oldValue - 2;
+                    m.Write(address, value: newValue, false);
+                }
             }
         }
 
@@ -103,6 +87,7 @@ namespace SOCOM_II_TOOL
                 return;
             }
             int newValue = 0x00000000;
+            //NEED TO GET DEFAULT VALUES FOR BRIGHTNESS LOCKS
              m.Write<Int32>(GameHelper.BRIGHTNESS1, newValue, false);
              m.Write<Int32>(GameHelper.BRIGHTNESS2, newValue, false);
              m.Write<Int32>(GameHelper.BRIGHTNESS3, newValue, false);  
