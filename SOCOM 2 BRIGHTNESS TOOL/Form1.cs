@@ -59,24 +59,43 @@ namespace SOCOM_II_TOOL
             }
             m = new MemorySharp(Process.GetProcessesByName(PCSX2PROCESSNAME).First());
 
-            if ((m.Read<byte>(GameHelper.sPlayerPointer, 4, false) != null) && (!m.Read<byte>(GameHelper.sPlayerPointer, 4, false).SequenceEqual(new byte[] { 0, 0, 0, 0 })))
+            //Numpad Brightness Toggle
+            if (GetAsyncKeyState(Keys.NumPad1) < 0)
             {
-                if (GetAsyncKeyState(Keys.Add) < 0)
-                {
-                    IntPtr address = GameHelper.BRIGHTNESS1;
-                    float oldValue = m.Read<float>(address, false);
-                    float newValue = oldValue + 2;
-                    m.Write(address, value: newValue, false);
-                }
-
-                if (GetAsyncKeyState(Keys.Subtract) < 0)
-                {
-                    IntPtr address = GameHelper.BRIGHTNESS1;
-                    float oldValue = m.Read<float>(address, false);
-                    float newValue = oldValue - 2;
-                    m.Write(address, value: newValue, false);
-                }
+                int lockedValue = 0x00000000;
+                int newValue = 0x40800000;
+                m.Write<Int32>(GameHelper.BRIGHTNESS1, newValue, false);
+                m.Write<Int32>(GameHelper.BRIGHTNESS1_LOCK1, lockedValue, false);
+                m.Write<Int32>(GameHelper.BRIGHTNESS1_LOCK2, lockedValue, false);
+                m.Write<Int32>(GameHelper.BRIGHTNESS1_RESET, lockedValue, false);
+                m.Write<Int32>(GameHelper.BRIGHTNESS2, newValue, false);
+                m.Write<Int32>(GameHelper.BRIGHTNESS2_LOCK1, lockedValue, false);
+                m.Write<Int32>(GameHelper.BRIGHTNESS2_LOCK2, lockedValue, false);
+                m.Write<Int32>(GameHelper.BRIGHTNESS2_RESET, lockedValue, false);
+                m.Write<Int32>(GameHelper.BRIGHTNESS3, newValue, false);
+                m.Write<Int32>(GameHelper.BRIGHTNESS3_LOCK1, lockedValue, false);
+                m.Write<Int32>(GameHelper.BRIGHTNESS3_LOCK2, lockedValue, false);
+                m.Write<Int32>(GameHelper.BRIGHTNESS3_LOCK3, lockedValue, false);
+                m.Write<Int32>(GameHelper.BRIGHTNESS3_RESET, lockedValue, false);
+                m.Write<Int32>(GameHelper.BRIGHTNESS3_RESETA, lockedValue, false);
             }
+
+            //Later Addition
+            //if (GetAsyncKeyState(Keys.Add) < 0)
+            //{
+            //    IntPtr address = GameHelper.BRIGHTNESS1;
+            //    float oldValue = m.Read<float>(address, false);
+            //    float newValue = oldValue + 2;
+            //    m.Write(address, value: newValue, false);
+            //}
+
+            //if (GetAsyncKeyState(Keys.Subtract) < 0)
+            //{
+            //    IntPtr address = GameHelper.BRIGHTNESS1;
+            //    float oldValue = m.Read<float>(address, false);
+            //    float newValue = oldValue - 2;
+            //    m.Write(address, value: newValue, false);
+            //}
         }
 
         /// DEFAULT BRIGHTNESS
