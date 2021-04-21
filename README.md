@@ -1,7 +1,7 @@
 # SOCOM-II-BRIGHTNESS-TOOL
 Brightness Adjustment Trainer for PCSX2
 
-![image](https://user-images.githubusercontent.com/80198020/115514016-af2dd800-a251-11eb-82c1-e73508043449.png)
+![image](https://user-images.githubusercontent.com/80198020/115514222-e0a6a380-a251-11eb-9f6f-a63695da6dcb.png)
 
 
 # DOWNLOAD LINK: 
