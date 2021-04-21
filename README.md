@@ -10,4 +10,4 @@ https://github.com/xCENTx/SOCOM-II-BRIGHTNESS-TOOL/releases/download/v1.0/SOCOM.
 # RELEASE PAGE: 
 https://github.com/xCENTx/SOCOM-II-BRIGHTNESS-TOOL/releases/tag/v1.0
 
-# LATEST RELEASE: v1.2
+# LATEST RELEASE: v2.0 (4/20/21)
