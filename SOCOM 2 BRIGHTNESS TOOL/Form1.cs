@@ -46,7 +46,7 @@ namespace SOCOM_II_TOOL
         public Form1()
         {
             InitializeComponent();
-            client = new DiscordRpcClient("774318933880209449");
+            client = new DiscordRpcClient("null");
             client.Initialize();
             client.SetPresence(presence);
         }
