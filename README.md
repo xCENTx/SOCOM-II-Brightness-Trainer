@@ -10,4 +10,6 @@ https://github.com/xCENTx/SOCOM-II-BRIGHTNESS-TOOL/releases/download/v1.0/SOCOM.
 # RELEASE PAGE: 
 https://github.com/xCENTx/SOCOM-II-BRIGHTNESS-TOOL/releases/tag/v1.0
 
+
+Discord RPC credit: https://github.com/Zero1UP/Socom-Ca-Stream-Data
 # LATEST RELEASE: v2.0 (4/20/21)
