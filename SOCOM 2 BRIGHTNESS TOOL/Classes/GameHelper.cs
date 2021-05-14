@@ -17,5 +17,8 @@ namespace SOCOM_II_MULTI_TOOL.Helpers
         public static IntPtr SealWins = new IntPtr(0x20695388);
         public static IntPtr TerrWins = new IntPtr(0x2069539C);
         public static IntPtr RoomName = new IntPtr(0x21FFBBE0);
+
+        //Brightness Address 1
+        public static IntPtr BRIGHTNESS1 = new IntPtr(0x204B858C);
     }
 }

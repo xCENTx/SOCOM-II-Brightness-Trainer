@@ -63,7 +63,7 @@ namespace SOCOM_II_TOOL
             else
             {
                 presence.Details = "Seals: " + sealWins + " || Terrorist: " + terrorWins;
-                presence.State = "Kills: " + kills + " Deaths: " + deaths;
+                presence.State = "Kills: " + kills + " || Deaths: " + deaths;
             }
             presence.Assets = new Assets();
             presence.Assets.LargeImageKey = "1";
