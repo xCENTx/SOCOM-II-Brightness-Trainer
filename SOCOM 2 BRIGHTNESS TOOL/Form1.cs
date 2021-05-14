@@ -7,6 +7,8 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using SOCOM_II_MULTI_TOOL;
+using System.Text.RegularExpressions;
 
 namespace SOCOM_II_TOOL
 {
@@ -27,6 +29,7 @@ namespace SOCOM_II_TOOL
 
         /// <summary>
         /// Discord Presence //Start
+        /// CREDIT 1UP (his source code)
         /// </summary>
 
         bool gameStarted = false;
@@ -46,7 +49,7 @@ namespace SOCOM_II_TOOL
         public Form1()
         {
             InitializeComponent();
-            client = new DiscordRpcClient("null");
+            client = new DiscordRpcClient("774318933880209449");
             client.Initialize();
             client.SetPresence(presence);
         }
@@ -167,19 +170,31 @@ namespace SOCOM_II_TOOL
             //Numpad Brightness Toggle ON
             if (GetAsyncKeyState(Keys.NumPad1) < 0)
             {
-                int newValue = 0x40800000;
-                m.Write<Int32>(GameHelper.BRIGHTNESS1, newValue, false);
-                m.Write<Int32>(GameHelper.BRIGHTNESS2, newValue, false);
-                m.Write<Int32>(GameHelper.BRIGHTNESS3, newValue, false);
+                var cheatString = @"204B858C 40800000
+                    204B859C 40800000
+                    204B85AC 40800000";
+
+                var cheat = ParseCheat(cheatString);
+
+                foreach (var code in cheat.Codes)
+                {
+                    m.Write<int>(code.Address, code.Data, false);
+                }
             }
 
             //Numpad Brightness Toggle OFF
             if (GetAsyncKeyState(Keys.NumPad0) < 0)
             {
-                int nop = 0x00000000;
-                m.Write<Int32>(GameHelper.BRIGHTNESS1, nop, false);
-                m.Write<Int32>(GameHelper.BRIGHTNESS2, nop, false);
-                m.Write<Int32>(GameHelper.BRIGHTNESS3, nop, false);
+                var cheatString = @"204B858C 00000000
+                    204B859C 00000000
+                    204B85AC 00000000";
+
+                var cheat = ParseCheat(cheatString);
+
+                foreach (var code in cheat.Codes)
+                {
+                    m.Write<int>(code.Address, code.Data, false);
+                }
             }
 
             //Single Player Brightness Adjustments
@@ -188,7 +203,6 @@ namespace SOCOM_II_TOOL
                 IntPtr address = GameHelper.BRIGHTNESS1;
                 float oldValue = m.Read<float>(address, false);
                 float newValue = oldValue + 2;
-                m.Write(address, value: newValue, false);
             }
 
             if (GetAsyncKeyState(Keys.Subtract) < 0)
@@ -207,10 +221,17 @@ namespace SOCOM_II_TOOL
             {
                 return;
             }
-            int nop = 0x00000000;
-            m.Write<Int32>(GameHelper.BRIGHTNESS1, nop, false);
-            m.Write<Int32>(GameHelper.BRIGHTNESS2, nop, false);
-            m.Write<Int32>(GameHelper.BRIGHTNESS3, nop, false);  
+
+            var cheatString = @"204B858C 00000000
+                    204B859C 00000000
+                    204B85AC 00000000";
+
+            var cheat = ParseCheat(cheatString);
+
+            foreach (var code in cheat.Codes)
+            {
+                m.Write<int>(code.Address, code.Data, false);
+            }
         }
 
         /// SLIGHT BRIGHTNESS ADJUSTMENT
@@ -220,10 +241,36 @@ namespace SOCOM_II_TOOL
             {
                 return;
             }
-             int newValue = 0x40800000;
-             m.Write<Int32>(GameHelper.BRIGHTNESS1, newValue, false);
-             m.Write<Int32>(GameHelper.BRIGHTNESS2, newValue, false);
-             m.Write<Int32>(GameHelper.BRIGHTNESS3, newValue, false);
+
+            var cheatString = @"204B858C 40800000
+                    204B859C 40800000
+                    204B85AC 40800000";
+
+            var cheat = ParseCheat(cheatString);
+
+            foreach (var code in cheat.Codes)
+            {
+                m.Write<int>(code.Address, code.Data, false);
+            }
+        }
+
+        private Cheat ParseCheat(string cheatText)
+        {
+            var matches = Regex.Matches(cheatText, "([0-9a-fA-F]{8}) ([0-9a-fA-F]{8})");
+
+            if (matches.Count > 0)
+            {
+                return new Cheat()
+                {
+                    Codes = matches.Cast<Match>()
+                    .Select(m => new Code()
+                    {
+                        Address = new IntPtr(Convert.ToInt32(m.Groups[1].Value, 16)),
+                        Data = Convert.ToInt32(m.Groups[2].Value, 16)
+                    }).ToList()
+                };
+            }
+            return null;
         }
     }
 }

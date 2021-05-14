@@ -96,7 +96,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cheat.cs" />
     <Compile Include="Classes\GameHelper.cs" />
+    <Compile Include="Code.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
