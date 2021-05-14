@@ -51,7 +51,7 @@ namespace SOCOM_II_TOOL
             InitializeComponent();
             client = new DiscordRpcClient("774318933880209449");
             client.Initialize();
-            client.SetPresence(presence);
+            //client.SetPresence(presence);
         }
 
         private void setPresence(int sealWins, int terrorWins, short kills, short deaths)
