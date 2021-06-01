@@ -1,6 +1,7 @@
 # SOCOM-II-BRIGHTNESS-TOOL
 - Brightness Adjustment Trainer for PCSX2
 - Includes Discord RPC Client originally created by 1UP
+
 Credit for RPC: 1UP SOCOM II Discord RPC 
 https://github.com/Zero1UP/socom-2-Discord-Presence
 
