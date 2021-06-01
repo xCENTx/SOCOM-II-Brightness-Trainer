@@ -14,25 +14,57 @@ namespace SOCOM_II_TOOL
 {
     public partial class Form1 : Form
     {
-        /// <summary>
-        /// MemorySharp //Start
-        /// </summary>
+        ///   NOTES
+        /// This is currently made for patch r0004 , planned for r0001 
+        /// 
+        /// Toggle Render Fix does not work
+        /// r0001 2033CD68 100000DB
+        /// r0004 2035A2F8 100000DB
+        /// 
+        /// My Render Fix Works as Toggle!!!
+        /// CENT v2 ---> 2035A320  0C0D64C8 (nop for fix) 
+        /// Retains player eye adjustment!
+        /// Must lower in game brightness!
+        /// 
+        /// Plans for Brightness Slider , Aim Sens Slider and keybinds
+        /// 
+        /// Goal is to keep the experience close to original while maintaining 100% Game Speed and player visibility
+        /// 
+
+        //Main Form
+        #region
+        //MemorySharp
         MemorySharp m = null;
         private const string PCSX2PROCESSNAME = "pcsx2";
         bool pcsx2Running;
+        bool gameStarted = false;
 
-        /// <summary>
-        /// HotKey C++ Import
-        /// </summary>
+        //HotKey C++ Import
         [DllImport("user32.dll")]
         static extern short GetAsyncKeyState(System.Windows.Forms.Keys vKey);
 
-        /// <summary>
-        /// Discord Presence //Start
-        /// CREDIT 1UP (his source code)
-        /// </summary>
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            if (!pcsx2Running)
+            {
+                return;
+            }
+            m = new MemorySharp(Process.GetProcessesByName(PCSX2PROCESSNAME).First());
+        }
 
-        bool gameStarted = false;
+        public Form1()
+        {
+            InitializeComponent();
+            client = new DiscordRpcClient("774318933880209449");
+            client.Initialize();
+            //client.SetPresence(presence);
+        }
+        
+        #endregion
+
+        //Discord RPC Stuff
+        /// CREDIT 1UP (his source code) 
+        #region
         private static RichPresence presence = new RichPresence()
         {
             Details = "Not currently in a game.",
@@ -45,14 +77,6 @@ namespace SOCOM_II_TOOL
             }
         };
         public DiscordRpcClient client;
-
-        public Form1()
-        {
-            InitializeComponent();
-            client = new DiscordRpcClient("774318933880209449");
-            client.Initialize();
-            //client.SetPresence(presence);
-        }
 
         private void setPresence(int sealWins, int terrorWins, short kills, short deaths)
         {
@@ -79,15 +103,11 @@ namespace SOCOM_II_TOOL
             setPresence(-1, -1, -1, -1);
             gameStarted = false;
         }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            if (!pcsx2Running)
-            {
-                return;
-            }
-            m = new MemorySharp(Process.GetProcessesByName(PCSX2PROCESSNAME).First());
-        }
+        
+        #endregion 
+        
+        //Timers
+        #region
 
         private void ProcessTimer_Tick(object sender, EventArgs e)
         {
@@ -107,6 +127,7 @@ namespace SOCOM_II_TOOL
             pcsx2Running = false;
         }
 
+        //Discord RPC Information
         private void DiscordTimer_Tick(object sender, EventArgs e)
         {
             if (!pcsx2Running)
@@ -159,6 +180,7 @@ namespace SOCOM_II_TOOL
             }
         }
 
+        //Key Press toggles
         private void HotkeyTimer_Tick(object sender, EventArgs e)
         {
             if (!pcsx2Running)
@@ -167,52 +189,63 @@ namespace SOCOM_II_TOOL
             }
             m = new MemorySharp(Process.GetProcessesByName(PCSX2PROCESSNAME).First());
 
-            //Numpad Brightness Toggle ON
-            if (GetAsyncKeyState(Keys.NumPad1) < 0)
-            {
-                var cheatString = @"204B858C 40800000
-                    204B859C 40800000
-                    204B85AC 40800000";
+            //Removed due to online abuse
+            //This will be put back as soon as i find a way to find out if user is online or not
 
-                var cheat = ParseCheat(cheatString);
 
-                foreach (var code in cheat.Codes)
-                {
-                    m.Write<int>(code.Address, code.Data, false);
-                }
-            }
+            ////Numpad Brightness Toggle ON (NUMPAD 1)
+            //if (GetAsyncKeyState(Keys.NumPad1) < 0)
+            //{
+            //    var cheatString = @"204B858C 40800000
+            //        204B859C 40800000
+            //        204B85AC 40800000";
 
-            //Numpad Brightness Toggle OFF
-            if (GetAsyncKeyState(Keys.NumPad0) < 0)
-            {
-                var cheatString = @"204B858C 00000000
-                    204B859C 00000000
-                    204B85AC 00000000";
+            //    var cheat = ParseCheat(cheatString);
 
-                var cheat = ParseCheat(cheatString);
+            //    foreach (var code in cheat.Codes)
+            //    {
+            //        m.Write<int>(code.Address, code.Data, false);
+            //    }
+            //}
 
-                foreach (var code in cheat.Codes)
-                {
-                    m.Write<int>(code.Address, code.Data, false);
-                }
-            }
+            ////Numpad Brightness Toggle OFF (NUMPAD 0)
+            //if (GetAsyncKeyState(Keys.NumPad0) < 0)
+            //{
+            //    var cheatString = @"204B858C 00000000
+            //        204B859C 00000000
+            //        204B85AC 00000000";
 
-            //Single Player Brightness Adjustments
-            if (GetAsyncKeyState(Keys.Add) < 0)
-            {
-                IntPtr address = GameHelper.BRIGHTNESS1;
-                float oldValue = m.Read<float>(address, false);
-                float newValue = oldValue + 2;
-            }
+            //    var cheat = ParseCheat(cheatString);
 
-            if (GetAsyncKeyState(Keys.Subtract) < 0)
-            {
-                IntPtr address = GameHelper.BRIGHTNESS1;
-                float oldValue = m.Read<float>(address, false);
-                float newValue = oldValue - 2;
-                m.Write(address, value: newValue, false);
-            }
+            //    foreach (var code in cheat.Codes)
+            //    {
+            //        m.Write<int>(code.Address, code.Data, false);
+            //    }
+            //}
+
+            ////Brightness Adjustments (NUMPAD +)
+            //if (GetAsyncKeyState(Keys.Add) < 0)
+            //{
+            //    IntPtr address = GameHelper.BRIGHTNESS1;
+            //    float oldValue = m.Read<float>(address, false);
+            //    float newValue = oldValue + 2;
+            //    m.Write(address, value: newValue, false);
+            //}
+
+            ////Brightness Adjustments (NUMPAD -)
+            //if (GetAsyncKeyState(Keys.Subtract) < 0)
+            //{
+            //    IntPtr address = GameHelper.BRIGHTNESS1;
+            //    float oldValue = m.Read<float>(address, false);
+            //    float newValue = oldValue - 2;
+            //    m.Write(address, value: newValue, false);
+            //}
         }
+
+        #endregion
+
+        //Buttons
+        #region
 
         /// DEFAULT BRIGHTNESS
         private void BLow_Click(object sender, EventArgs e)
@@ -235,6 +268,9 @@ namespace SOCOM_II_TOOL
         }
 
         /// SLIGHT BRIGHTNESS ADJUSTMENT
+        /// Used in conjunction with Harry62 Render Fix
+        /// Special thanks to RENEGADE
+        /// Value is float (3.25)
         private void PerfectBrightness_Click(object sender, EventArgs e)
         {
             if (!pcsx2Running)
@@ -242,9 +278,9 @@ namespace SOCOM_II_TOOL
                 return;
             }
 
-            var cheatString = @"204B858C 40800000
-                    204B859C 40800000
-                    204B85AC 40800000";
+            var cheatString = @"204B858C 40500000
+                    204B859C 40500000
+                    204B85AC 40500000";
 
             var cheat = ParseCheat(cheatString);
 
@@ -254,6 +290,75 @@ namespace SOCOM_II_TOOL
             }
         }
 
+        //CENT Render Fix ON
+        //Not Currently Implemented
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (!pcsx2Running)
+            {
+                return;
+            }
+
+            var cheatString = @"2035A320 00000000";
+
+            var cheat = ParseCheat(cheatString);
+
+            foreach (var code in cheat.Codes)
+            {
+                m.Write<int>(code.Address, code.Data, false);
+            }
+        }
+
+        //CENT Render Fix OFF
+        //Not Currently Implemented
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (!pcsx2Running)
+            {
+                return;
+            }
+
+            var cheatString = @"2035A320 0C0D64C8";
+
+            var cheat = ParseCheat(cheatString);
+
+            foreach (var code in cheat.Codes)
+            {
+                m.Write<int>(code.Address, code.Data, false);
+            }
+        }
+
+        //Red Dot (Colorblind Assistant)
+        //Not Currently Implemented
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (!pcsx2Running)
+            {
+                return;
+            }
+
+            var cheatString = @"202178AC 080394C0
+                            200E52A0 43000000
+                            200E5300 3C08000E
+                            200E5304 350852A0
+                            200E5308 8D090000
+                            200E530C AE8900B0
+                            200E5310 8D090004
+                            200E5314 AE8900B4
+                            200E5318 8D090008
+                            200E531C AE8900B8
+                            200E5320 03E00008";
+
+            var cheat = ParseCheat(cheatString);
+
+            foreach (var code in cheat.Codes)
+            {
+                m.Write<int>(code.Address, code.Data, false);
+            }
+        }
+        #endregion
+
+        /// Special Thanks to Antix for this spectacular method
         private Cheat ParseCheat(string cheatText)
         {
             var matches = Regex.Matches(cheatText, "([0-9a-fA-F]{8}) ([0-9a-fA-F]{8})");

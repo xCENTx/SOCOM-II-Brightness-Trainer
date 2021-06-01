@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SOCOM_II_MULTI_TOOL.Properties {
+namespace SOCOM_2_BRIGHTNESS_TRAINER.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace SOCOM_II_MULTI_TOOL.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SOCOM_II_MULTI_TOOL.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("SOCOM_2_BRIGHTNESS_TRAINER.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
