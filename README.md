@@ -15,7 +15,7 @@ https://github.com/Zero1UP/socom-2-Discord-Presence
 - Apply the brightness adjust by pressing the "PERFECT" button
 - Display that you are playing SOCOM 2 on Discord by using the checkbox 
 # Video
-https://www.youtube.com/watch?v=oY1GTeTYKqM
+[![image](https://img.youtube.com/vi/oY1GTeTYKqM/0.jpg)(https://www.youtube.com/watch?v=oY1GTeTYKqM)
 
 # Images
 ![image](https://user-images.githubusercontent.com/80198020/120259260-9e657e80-c261-11eb-9462-cdfd454e36d4.png)
