@@ -17,6 +17,7 @@ https://github.com/Zero1UP/socom-2-Discord-Presence
 # Video
 [![image](https://img.youtube.com/vi/oY1GTeTYKqM/0.jpg)](https://www.youtube.com/watch?v=oY1GTeTYKqM)
 
+![](https://gifmaker.me/files/download/home/20210620/18/6eNiM3gmExsipHalzy6ogy/output_Ve7f55.gif)
 # Images
 ![image](https://user-images.githubusercontent.com/80198020/120259260-9e657e80-c261-11eb-9462-cdfd454e36d4.png)
 
