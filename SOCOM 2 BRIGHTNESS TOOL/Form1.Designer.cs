@@ -36,9 +36,9 @@ namespace SOCOM_II_TOOL
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.pcsx2Status = new System.Windows.Forms.Label();
             this.HotkeyTimer = new System.Windows.Forms.Timer(this.components);
-            this.label2 = new System.Windows.Forms.Label();
             this.BLow = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.lockBrightness_checkBox = new System.Windows.Forms.CheckBox();
             this.PerfectBrightness = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.DiscordTimer = new System.Windows.Forms.Timer(this.components);
@@ -92,20 +92,7 @@ namespace SOCOM_II_TOOL
             // HotkeyTimer
             // 
             this.HotkeyTimer.Enabled = true;
-            this.HotkeyTimer.Interval = 1000;
             this.HotkeyTimer.Tick += new System.EventHandler(this.HotkeyTimer_Tick);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
-            this.label2.ForeColor = System.Drawing.Color.Red;
-            this.label2.Location = new System.Drawing.Point(37, -2);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(169, 29);
-            this.label2.TabIndex = 50;
-            this.label2.Text = "BRIGHTNESS";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // BLow
             // 
@@ -120,13 +107,25 @@ namespace SOCOM_II_TOOL
             // panel2
             // 
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel2.Controls.Add(this.lockBrightness_checkBox);
             this.panel2.Controls.Add(this.PerfectBrightness);
-            this.panel2.Controls.Add(this.label2);
             this.panel2.Controls.Add(this.BLow);
             this.panel2.Location = new System.Drawing.Point(3, 112);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(251, 64);
             this.panel2.TabIndex = 65;
+            // 
+            // lockBrightness_checkBox
+            // 
+            this.lockBrightness_checkBox.AutoSize = true;
+            this.lockBrightness_checkBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
+            this.lockBrightness_checkBox.ForeColor = System.Drawing.Color.Red;
+            this.lockBrightness_checkBox.Location = new System.Drawing.Point(3, 0);
+            this.lockBrightness_checkBox.Name = "lockBrightness_checkBox";
+            this.lockBrightness_checkBox.Size = new System.Drawing.Size(240, 30);
+            this.lockBrightness_checkBox.TabIndex = 52;
+            this.lockBrightness_checkBox.Text = "LOCK BRIGHTNESS";
+            this.lockBrightness_checkBox.UseVisualStyleBackColor = true;
             // 
             // PerfectBrightness
             // 
@@ -185,12 +184,12 @@ namespace SOCOM_II_TOOL
         private System.Windows.Forms.Panel pnl_PCSX2Detected;
         private System.Windows.Forms.Label pcsx2Status;
         private System.Windows.Forms.Timer HotkeyTimer;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button BLow;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button PerfectBrightness;
         private System.Windows.Forms.Timer DiscordTimer;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.CheckBox lockBrightness_checkBox;
     }
 }
 
