@@ -45,10 +45,6 @@ namespace SOCOM_II_TOOL
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            if (!pcsx2Running)
-            {
-                return;
-            }
             m = new MemorySharp(Process.GetProcessesByName(PCSX2PROCESSNAME).First());
         }
 
@@ -57,7 +53,6 @@ namespace SOCOM_II_TOOL
             InitializeComponent();
             client = new DiscordRpcClient("774318933880209449");
             client.Initialize();
-            //client.SetPresence(presence);
         }
 
         /// Special Thanks to Antix for this spectacular method
@@ -147,69 +142,22 @@ namespace SOCOM_II_TOOL
             pcsx2Running = false;
         }
 
-        //Discord RPC Information
-        private void DiscordTimer_Tick(object sender, EventArgs e)
+        private void MemoryTimer_Tick(object sender, EventArgs e)
         {
-            if (!pcsx2Running)
-            {
-                return;
-            }
-            m = new MemorySharp(Process.GetProcessesByName(PCSX2PROCESSNAME).First());
-            if (checkBox1.Checked)
-            {
-                try
-                {
-                    if ((m.Read<byte>(GameHelper.PlayerPointer, 4, false) != null) && (!m.Read<byte>(GameHelper.PlayerPointer, 4, false).SequenceEqual(new byte[] { 0, 0, 0, 0 })))
-                    {
-                        if (m.Read<byte>(GameHelper.GameEndAddress, false) == 0)
-                        {
-                            IntPtr playerObjectAddress = new IntPtr(m.Read<int>(GameHelper.PlayerPointer, false)) + 0x20000000;
-                            short kills = m.Read<short>(playerObjectAddress + GameHelper.PlayerKills, false);
-                            short deaths = m.Read<short>(playerObjectAddress + GameHelper.PlayerDeaths, false);
-                            int sealsRoundsWon = m.Read<byte>(GameHelper.SealWins, false);
-                            int terroristRoundsWon = m.Read<byte>(GameHelper.TerrWins, false);
-                            if (!gameStarted)
-                            {
-                                presence.Timestamps = new Timestamps()
-                                {
-                                    Start = DateTime.UtcNow
-
-                                };
-
-                                gameStarted = true;
-                            }
-                            setPresence(sealsRoundsWon, terroristRoundsWon, kills, deaths);
-                        }
-                        else
-                        {
-                            m.Write<byte>(GameHelper.GameEndAddress, new byte[] { 0x00 }, false);
-                            resetPresence();
-                        }
-                    }
-                    else
-                    {
-                        m.Write<byte>(GameHelper.GameEndAddress, new byte[] { 0x00 }, false);
-                        resetPresence();
-                    }
-                }
-                catch (Exception)
-                {
-                    //This only happens if the game isn't actually running but pcsx2 is. It would result in a crash but there's no reason to inform the user
-                    resetPresence();
-                }
-            }
+            RICHPRESENCE();
+            HOTKEYS();
         }
 
-        //Key Press toggles
-        private void HotkeyTimer_Tick(object sender, EventArgs e)
+        #endregion
+
+        #region FUNCTIONS
+
+        private void HOTKEYS()
         {
             if (!pcsx2Running)
             {
                 return;
             }
-            m = new MemorySharp(Process.GetProcessesByName(PCSX2PROCESSNAME).First());
-
-            #region // Hotkeys & Brightness Lock
             //Numpad Brightness Toggle ON (NUMPAD 1)
             if (GetAsyncKeyState(Keys.NumPad1) < 0)
             {
@@ -278,7 +226,58 @@ namespace SOCOM_II_TOOL
                 }
             }
 
-            #endregion
+        }
+
+        private void RICHPRESENCE()
+        {
+            if (!pcsx2Running)
+            {
+                return;
+            }
+
+            if (checkBox1.Checked)
+            {
+                try
+                {
+                    if ((m.Read<byte>(GameHelper.PlayerPointer, 4, false) != null) && (!m.Read<byte>(GameHelper.PlayerPointer, 4, false).SequenceEqual(new byte[] { 0, 0, 0, 0 })))
+                    {
+                        if (m.Read<byte>(GameHelper.GameEndAddress, false) == 0)
+                        {
+                            IntPtr playerObjectAddress = new IntPtr(m.Read<int>(GameHelper.PlayerPointer, false)) + 0x20000000;
+                            short kills = m.Read<short>(playerObjectAddress + GameHelper.PlayerKills, false);
+                            short deaths = m.Read<short>(playerObjectAddress + GameHelper.PlayerDeaths, false);
+                            int sealsRoundsWon = m.Read<byte>(GameHelper.SealWins, false);
+                            int terroristRoundsWon = m.Read<byte>(GameHelper.TerrWins, false);
+                            if (!gameStarted)
+                            {
+                                presence.Timestamps = new Timestamps()
+                                {
+                                    Start = DateTime.UtcNow
+
+                                };
+
+                                gameStarted = true;
+                            }
+                            setPresence(sealsRoundsWon, terroristRoundsWon, kills, deaths);
+                        }
+                        else
+                        {
+                            m.Write<byte>(GameHelper.GameEndAddress, new byte[] { 0x00 }, false);
+                            resetPresence();
+                        }
+                    }
+                    else
+                    {
+                        m.Write<byte>(GameHelper.GameEndAddress, new byte[] { 0x00 }, false);
+                        resetPresence();
+                    }
+                }
+                catch (Exception)
+                {
+                    //This only happens if the game isn't actually running but pcsx2 is. It would result in a crash but there's no reason to inform the user
+                    resetPresence();
+                }
+            }
         }
 
         #endregion

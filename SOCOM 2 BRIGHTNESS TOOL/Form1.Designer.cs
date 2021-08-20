@@ -35,13 +35,12 @@ namespace SOCOM_II_TOOL
             this.pnl_PCSX2Detected = new System.Windows.Forms.Panel();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.pcsx2Status = new System.Windows.Forms.Label();
-            this.HotkeyTimer = new System.Windows.Forms.Timer(this.components);
             this.BLow = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.lockBrightness_checkBox = new System.Windows.Forms.CheckBox();
             this.PerfectBrightness = new System.Windows.Forms.Button();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
-            this.DiscordTimer = new System.Windows.Forms.Timer(this.components);
+            this.MemoryTimer = new System.Windows.Forms.Timer(this.components);
             this.pnl_PCSX2Detected.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
@@ -88,11 +87,6 @@ namespace SOCOM_II_TOOL
             this.pcsx2Status.TabIndex = 61;
             this.pcsx2Status.Text = "PCSX2 NOT DETECTED";
             this.pcsx2Status.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // HotkeyTimer
-            // 
-            this.HotkeyTimer.Enabled = true;
-            this.HotkeyTimer.Tick += new System.EventHandler(this.HotkeyTimer_Tick);
             // 
             // BLow
             // 
@@ -147,11 +141,10 @@ namespace SOCOM_II_TOOL
             this.pictureBox2.TabIndex = 67;
             this.pictureBox2.TabStop = false;
             // 
-            // DiscordTimer
+            // MemoryTimer
             // 
-            this.DiscordTimer.Enabled = true;
-            this.DiscordTimer.Interval = 3000;
-            this.DiscordTimer.Tick += new System.EventHandler(this.DiscordTimer_Tick);
+            this.MemoryTimer.Enabled = true;
+            this.MemoryTimer.Tick += new System.EventHandler(this.MemoryTimer_Tick);
             // 
             // Form1
             // 
@@ -183,11 +176,10 @@ namespace SOCOM_II_TOOL
         private System.Windows.Forms.Timer ProcessTimer;
         private System.Windows.Forms.Panel pnl_PCSX2Detected;
         private System.Windows.Forms.Label pcsx2Status;
-        private System.Windows.Forms.Timer HotkeyTimer;
         private System.Windows.Forms.Button BLow;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Button PerfectBrightness;
-        private System.Windows.Forms.Timer DiscordTimer;
+        private System.Windows.Forms.Timer MemoryTimer;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.CheckBox lockBrightness_checkBox;
     }
